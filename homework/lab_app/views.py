@@ -2,9 +2,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views.generic import View, ListView
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import View, ListView, UpdateView
+from django.urls import reverse
+from lab_app.forms import ChangeForm
 from lab_app.models import Film, Review
 
 from django.views.decorators.csrf import csrf_exempt
@@ -137,13 +138,18 @@ class LoginView(View):
 
         return redirect("/invalidUser")
 
-
 # Страница выхода
 class LogoutView(View):
 
     def post(self, request):
         logout(request)
         return redirect("/")
+
+class ChangeUpdateView(UpdateView):
+    model = User
+    template_name = 'change_form.html'
+    form_class = ChangeForm
+    success_url = '/change/'
 
 
 # Создание и сохранение отзыва
@@ -180,6 +186,26 @@ def create_review(request):
 class AboutView(View):
 
     def get(self, request):
-        # ..
 
         return render(request, 'about.html')
+
+class InfoView(View):
+
+    def get(self, request):
+
+        return render(request, 'page.html')
+
+@csrf_exempt
+def change_profile(request):
+    args = {}
+
+    if request.method == 'POST':
+        form = ChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('change_profile_success'))
+    else:
+        form = ChangeUpdateView()
+
+    args['form'] = form
+    return render(request, 'page.html', args)
