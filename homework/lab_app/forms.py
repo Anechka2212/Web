@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = User
+        fields = '__all__'
         widgets = {
             'text': forms.TextInput(
                 attrs={'id': 'post-text', 'required': True, 'placeholder': 'awaiting'}
@@ -18,17 +19,18 @@ class SignUpForm(forms.ModelForm):
 class LoginForm(forms.ModelForm):
     class Meta:
         model = User
+        fields = '__all__'
         widgets = {
             'text': forms.TextInput(
                 attrs={'id': 'post-text', 'required': True, 'placeholder': 'awaiting'}
             ),
         }
 
-
-# Форма добавления 
+# Форма добавления
 class AddFilmForm(forms.ModelForm):
     class Meta:
         model = Film
+        fields = '__all__'
         widgets = {
             'text': forms.TextInput(
                 attrs={'id': 'post-text', 'required': True, 'placeholder': 'awaiting'}
@@ -40,9 +42,34 @@ class AddFilmForm(forms.ModelForm):
 class PostReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['text']
+        fields = '__all__'
         widgets = {
             'text': forms.TextInput(
                 attrs={'id': 'post-text', 'required': True, 'placeholder': 'awaiting'}
             ),
         }
+
+# Форма изменения
+
+class ChangeForm(forms.ModelForm):
+    username = forms.CharField(required=False)
+    email = forms.EmailField(required=False)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        last_name = self.cleaned_data.get('last_name')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.last_name = self.cleaned_data['last_name']
+
+        if commit:
+            user.save()
+
+        return user
