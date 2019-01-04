@@ -14,7 +14,7 @@ function create_review() {
         type: "POST", // метод
         data: {
             "review_text": $('#reviewInputText').val(),
-            "product_id": $('#film-id-value').val(),
+            "film_id": $('#film-id-value').val(),
             "reviews_count": $('#reviews-count').val()
         }, // json с данными
         headers: {'X-CSRFToken': csrf_token},
