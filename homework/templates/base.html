@@ -181,6 +181,28 @@
                     $("#login-form-button").attr('disabled', false);
                 }
             })
+             // Валидация личной страницы
+            $('#page').validate({
+                rules: {
+                    first_name: {
+                        required: true,
+                    },
+                    last_name: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    first_name: {
+                        required: "Enter first name",
+                    },
+                    last_name: {
+                        required: "Enter last name",
+                    }
+                },
+                success: function(){
+                    $("#change-button").attr('disabled', false);
+                }
+            })
         });
         // Бесконечная прокрутка
         var pageNumber = {{ page }} // номер страницы
@@ -189,13 +211,14 @@
         $(window).scroll(
             function () {
                 if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                    //Подгрузка новых элементов
-                    if (pageNumber < pagesCount) {
-                        pageNumber += 1
-                        loadFilms(pageNumber);
-                    } else {
-                        // конец списка
-                    }
+                    $.ajax({
+                        type: 'GET',
+                        dataType: "json",
+                        data: {'value': 3},
+                        success: function(data) {
+                            // Ответ приходит в переменную data. Её и рендерим на страницу
+                            }
+                    });
                 }});
     </script>
 
