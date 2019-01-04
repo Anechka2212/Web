@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^change/$', change_profile, name='change_profile'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^invalidUser/', InvalidUser.as_view()),
     url(r'^about/', AboutView.as_view()),
     url(r'^admin/', admin.site.urls),
     url(r'^info/', InfoView.as_view()),
