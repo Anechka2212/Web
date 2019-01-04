@@ -25,8 +25,8 @@ class LoginForm(forms.ModelForm):
         }
 
 
-# Форма добавления продукта
-class AddProductForm(forms.ModelForm):
+# Форма добавления 
+class AddFilmForm(forms.ModelForm):
     class Meta:
         model = Film
         widgets = {
