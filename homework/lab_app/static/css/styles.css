@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/**
+ * Custom styles
+ */
+.error {
+  color: dimgray;
+  font-color: #178059;
+  margin-top: 5px;
+  margin-left: 5px;
+}
