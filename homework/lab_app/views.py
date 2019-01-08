@@ -203,7 +203,7 @@ def change_profile(request):
         form = ChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('change_profile_success'))
+            return HttpResponseRedirect(reverse('change_profile'))
     else:
         form = ChangeUpdateView()
 
