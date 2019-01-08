@@ -20,7 +20,7 @@ class Film(models.Model):
 
     # Полный путь до картинки фильма
     def image_path(self):
-        return self.image.name.replace('lab_app/', '')
+        return self.image.name.replace('lab_app/', '/')
 
     # Короткое описание фильма
     def short_description(self):
