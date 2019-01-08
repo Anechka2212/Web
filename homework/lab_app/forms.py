@@ -59,7 +59,7 @@ class ChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('first_name', 'last_name')
 
     def clean_name(self):
         first_name = self.cleaned_data.get('first_name')
@@ -68,6 +68,7 @@ class ChangeForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.last_name = self.cleaned_data['last_name']
+        user.first_name = self.cleaned_data['first_name']
 
         if commit:
             user.save()
