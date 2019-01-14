@@ -120,6 +120,11 @@ class SignUpView(View):
                 return redirect("/")
 
         return redirect("/invalidUser")
+   
+class InvalidUser(View):
+    def get(self, request):
+
+        return render(request, 'invalid.html')
 
 
 # Страница авторизации
